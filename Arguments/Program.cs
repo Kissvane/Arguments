@@ -50,7 +50,7 @@ namespace Arguments
 
             Circle circle = new Circle(5,name:"C0");
             ModifyCircle(ref circle, 10);
-            Console.WriteLine(circle.Radius);
+            Console.WriteLine("Le radius de " + circle.Name + " est de " + circle.Radius);
 
             #endregion
 
@@ -62,6 +62,10 @@ namespace Arguments
             {
                 Console.WriteLine("Le radius de " + wrapper.circle.Name + " est de " + wrapper.circle.Radius);
                 Console.WriteLine("Le radius de " + copy.circle.Name + " est de " + copy.circle.Radius);
+            }
+            else
+            {
+                Console.WriteLine("La copie a échouée.");
             }
 
             wrapper.circle.Modifiable = false;
@@ -82,6 +86,8 @@ namespace Arguments
             {
                 Console.WriteLine("La copie a fonctionné");
                 Console.WriteLine("Le radius de " + copiedCircle.Name + " est de " + copiedCircle.Radius);
+                Console.WriteLine("Le radius de " + circle.Name + " est de " + circle.Radius);
+
             }
             else
             {
@@ -175,8 +181,16 @@ namespace Arguments
         static bool CopyAndModifyCircle(Circle circle, int newRadius, string newName, out Circle copy)
         {
             copy = circle;
-            copy.Radius = newRadius;
-            copy.Name = newName;
+            if (circle.Modifiable)
+            {
+                copy.Radius = newRadius;
+                copy.Name = newName;
+            }
+            else
+            {
+                copy.Radius = -1;
+                copy.Name += "_CopieInvalide";
+            }
 
             return circle.Modifiable;
         }
